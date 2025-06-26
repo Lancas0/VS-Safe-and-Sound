@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "vsafe",
+  "version": "${version}",
+  "name": "VS Safe and Sound",
+  "description": "Catching all exceptions in the VS physics thread, preventing VS phys thread crashes.",
+  "authors": ["Lancas"],
+  "license": "MIT",
+  "icon": "assets/vsafe/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.lancas.vsafe.fabric.VSafeModFabric"
+    ],
+    "client": [
+      "com.lancas.vsafe.fabric.VSafeModFabricClient"
+    ],
+    "preLaunch": [
+
+    ],
+    "modmenu": [
+      "com.lancas.vsafe.fabric.VSafeModFabricMenu"
+    ],
+    "fabric-datagen": [
+
+    ]
+  },
+  "mixins": [
+    "vsafe-common.mixins.json",
+    "vsafe.mixins.json"
+  ],
+  "depends": {
+    "minecraft": ">=1.20.1",
+    "valkyrienskies": ">=${vs2_version}",
+    "fabricloader": ">=0.14.21"
+  }
+}

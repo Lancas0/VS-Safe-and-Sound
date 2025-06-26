@@ -1,0 +1,14 @@
+{
+  "itemGroup.vsafe.tab": "VS Safe and Sound",
+  "itemGroup.eureka": "VS Safe and Sound",
+
+  "item.vsafe.crash_it": "Crash It",
+
+  "title.vsafe.config": "VS Safe and Sound Config",
+
+  "option.vasfe.safe_phys_thread_on": "Safe VS Phys Thread On",
+  "tooltip.vasfe.safe_phys_thread_on": "Safe Phys Thread On determines whether the safe physics thread is enabled.\nA game restart is required for this setting to fully take effect.",
+
+  "option.vasfe.debug_mode": "Debug Mode",
+  "tooltip.vsafe.debug_mode": "Debug Mode controls the visibility of exceptions caught in the physics thread.\nBy default, it is set to OnlyInLog (only shown in the log)."
+}

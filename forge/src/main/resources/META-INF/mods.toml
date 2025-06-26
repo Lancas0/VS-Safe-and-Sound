@@ -1,0 +1,34 @@
+modLoader = "javafml"
+loaderVersion = "[47,)"
+license = "MIT"
+
+[[mods]]
+modId = "vsafe"
+version = "${version}"
+displayName = "VS Safe and Sound"
+authors = ["Lancas"]
+description = '''
+Catching all exceptions in the VS physics thread, preventing VS phys thread crashes
+'''
+logoFile = "icon.png"
+
+[[dependencies.vsafe]]
+modId = "forge"
+mandatory = true
+versionRange = "[47.0.18,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.vsafe]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.20.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.vsafe]]
+modId = "valkyrienskies"
+mandatory = true
+versionRange = "[2.1.,)"
+ordering = "AFTER"
+side = "BOTH"
