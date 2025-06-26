@@ -14,7 +14,7 @@ plugins {
 }
 
 // Determine the version
-if (project.hasProperty("CustomReleaseVersion")) {
+/*if (project.hasProperty("CustomReleaseVersion")) {
     // Remove release/ from the version if present
     version = project.property("CustomReleaseVersion").replaceFirst("^release/", "")
 } else {
@@ -24,7 +24,8 @@ if (project.hasProperty("CustomReleaseVersion")) {
     } catch (Exception e) {
         version = mod_version
     }
-}
+}*/
+version = mod_version
 
 architectury {
     minecraft = rootProject.minecraft_version
@@ -112,13 +113,7 @@ allprojects {
         }
         maven {
             name = "Valkyrien Skies Internal"
-            url = project.vs_maven_url ?: 'https://maven.valkyrienskies.org'
-            if (project.vs_maven_username && project.vs_maven_password) {
-                credentials {
-                    username = project.vs_maven_username
-                    password = project.vs_maven_password
-                }
-            }
+            url = 'https://maven.valkyrienskies.org'
         }
     }
 

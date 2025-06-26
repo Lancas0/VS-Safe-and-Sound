@@ -6,9 +6,9 @@
 
   "title.vsafe.config": "VS Safe and Sound Config",
 
-  "option.vasfe.safe_phys_thread_on": "Safe VS Phys Thread On",
-  "tooltip.vasfe.safe_phys_thread_on": "Safe Phys Thread On determines whether the safe physics thread is enabled.\nA game restart is required for this setting to fully take effect.",
+  "option.vsafe.safe_phys_thread_on": "Safe VS Phys Thread On",
+  "tooltip.vsafe.safe_phys_thread_on": "Safe Phys Thread On determines whether the safe physics thread is enabled.\nA game restart is required for this setting to fully take effect.",
 
-  "option.vasfe.debug_mode": "Debug Mode",
-  "tooltip.vsafe.debug_mode": "Debug Mode controls the visibility of exceptions caught in the physics thread.\nBy default, it is set to OnlyInLog (only shown in the log)."
+  "option.vsafe.debug_mode": "Debug Mode",
+  "tooltip.vsafe.debug_mode": "Debug Mode controls the visibility of exceptions caught in the physics thread.(Default OnlyInLogST)\n    Silent:No Debug\n    OnlyInLog:Short exception message will be output in log\n    OnlyInLogST:Exception with full stacktrace will be output in log\n    DisplayInGame:Short exception message will be output in log and chat\n    DisplayInGameST:Short exception message in chat, full stacktrace in log"
 }

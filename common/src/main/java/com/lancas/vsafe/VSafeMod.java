@@ -28,13 +28,16 @@ public class VSafeMod {
 
     // Registering a new creative tab
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(MODID, Registries.CREATIVE_MODE_TAB);
-    public static final RegistrySupplier<CreativeModeTab> EXAMPLE_TAB = TABS.register("tab", () ->
-        CreativeTabRegistry.create(Component.translatable("itemGroup." + MODID + ".tab"),
-            () -> new ItemStack(VSafeMod.CRASH_IT.get())));
+    public static final RegistrySupplier<CreativeModeTab> TAB = TABS.register("tab", () ->
+        CreativeTabRegistry.create(
+            Component.translatable("itemGroup." + MODID + ".tab"),
+            () -> new ItemStack(VSafeMod.CRASH_IT.get())
+        )
+    );
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(MODID, Registries.ITEM);
     public static final RegistrySupplier<Item> CRASH_IT = ITEMS.register("crash_it", () ->
-        new Item(new Item.Properties().arch$tab(VSafeMod.EXAMPLE_TAB)) {
+        new Item(new Item.Properties().arch$tab(VSafeMod.TAB)) {
             @Override
             public InteractionResult useOn(UseOnContext ctx) {
                 if (!(ctx.getLevel() instanceof ServerLevel level))

@@ -16,7 +16,7 @@ import net.minecraft.network.chat.Component;
 @Config(name = VSafeMod.MODID)
 public class VSafeConfig implements ConfigData {
     @ConfigEntry.Gui.Tooltip
-    public EzDebug.DebugMode debugMode = EzDebug.DebugMode.OnlyInLog;
+    public EzDebug.DebugMode debugMode = EzDebug.DebugMode.OnlyInLogST;
     @ConfigEntry.Gui.Tooltip
     public boolean safePhysThreadOn = true;
 
@@ -57,7 +57,7 @@ public class VSafeConfig implements ConfigData {
                     EzDebug.DebugMode.class,
                     get().debugMode
                 )
-                .setDefaultValue(EzDebug.DebugMode.OnlyInLog)
+                .setDefaultValue(EzDebug.DebugMode.OnlyInLogST)
                 .setTooltip(Component.translatable("tooltip.vsafe.debug_mode"))
                 .setSaveConsumer(debug -> get().debugMode = debug)
                 .build()
