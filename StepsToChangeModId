@@ -1,0 +1,87 @@
+1.change project name
+    ./settings.gradle.kts : rootProject.name = "new project name"
+
+2.clean up, keep anything that may be used (keep mod menu part for example)
+    main/java/com.lancas.sandbox -> abc.name.xxx
+    VSafeMod                   -> xxxMod
+    VsafeModClient             -> xxxModClient
+    and so on, remember to clean up fabric and forge
+
+    ./gradle.properties:
+        mod_name=New Mod Name
+        mod_id=new_mod_id
+        archives_base_name=new_mod_id-version
+        maven_group=com.lancas -> maven_group=abc.name
+
+    common/src/main/resources/
+        assets/vsafe -> assets/xxx
+        data/vsafe   -> data/xxx,   data/xxx/vs_mass/vsafe.json -> data/xxx/vs_mass/xxx.json (here put the mass of your mod block)
+
+    fabric/src/main/resources/fabric.mod.json:  (these enter point should be handled by IDE when you rename the FabricClasses, however better to check)
+        "id": "new_mod_id",
+        "name": "New Mod Name",
+        "description": "New description.",
+        "authors": ["Your Name"],
+        "license": "New License",
+
+        "main":    ["abc.name.xxx.fabric.xxxModFabric"],
+        "client":  ["abc.name.xxx.fabric.xxxModFabricClient"],
+        "server":  ["abc.name.xxx.fabric.xxxModFabricServer"],
+        "modmenu": ["abc.name.xxx.fabric.xxxModFabricMenu"]
+
+
+    forge/src/main/resources/
+        META-INF/mods.toml:
+            license: "New License"
+            modId = "new_mod_id"
+            displayName = "New Mod Name"
+            authors = ["Your Name"]
+            description = '''New description.'''
+            [[dependencies.vsafe]] -> [[dependencies.new_mod_id]]
+            displayTest =
+                "MATCH_VERSION" for Client&Server, version must match (DEFAULT)
+                "IGNORE_ALL_VERSION" for Client&Server, don't match version
+                "IGNORE_SERVER_VERSION" for Server-necessary&Client-optional
+                "NONE" for Client&Server-optional, maybe used for Client-only mod
+
+        pack.mcmeta: "description": "VSafe" -> "description": "Anything You want, best ModName"
+
+
+3.accessWidener
+    common/src/main/resources/vsafe.accesswidener -> new_mod_id.accesswidener
+    common/src/build.gradle : accessWidenerPath     -> file("src/main/resources/new_mod_id.accesswidener")
+
+4.mixin
+    common/src/main/resources/vsafe-common.mixin.json -> new_mod_id-common.mixin.json :
+        "package": "abc.name.new_mod_id.mixin"
+
+    fabric/src/main/resources/vsafe.mixin.json        -> new_mod_id.mixin.json :
+        "package": "com.name.new_mod_id.fabric.mixin"
+
+    forge/src/main/resources/vsafe.mixin.json         -> new_mod_id.mixin.json :
+        "package": "com.name.new_mod_id.forge.mixin",
+        "plugin": "com.name.new_mod_id.forge.mixin.ValkyrienForgeMixinConfigPlugin"
+
+    fabric/src/main/resources/fabric.mod.json:
+        "mixins": [
+            "new_mod_id-common.mixins.json",
+            "new_mod_id.mixins.json"
+        ]
+
+    forge/build.gradle:
+        loom {
+            accessWidenerPath = project(":common").loom.accessWidenerPath
+
+            forge {
+                convertAccessWideners = true
+                mixinConfig "vsafe.mixins.json"         ->  mixinConfig "new_mod_id.mixins.json"
+                mixinConfig "vsafe-common.mixins.json"  ->  mixinConfig "new_mod_id-common.mixins.json"
+                extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
+            }
+        }
+
+
+
+5.test run.
+    if fail to run, or in game the modid is wrong, search for  vsafe  in files, change ones that needed to be change.
+    (don't replace all, cause this file also contains  vsafe  )
