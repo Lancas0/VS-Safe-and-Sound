@@ -15,6 +15,9 @@
     "client": [
       "com.lancas.vsafe.fabric.VSafeModFabricClient"
     ],
+    "server": [
+      "com.lancas.vsafe.fabric.VSafeModFabricServer"
+    ],
     "preLaunch": [
 
     ],

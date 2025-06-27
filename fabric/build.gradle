@@ -39,6 +39,11 @@ dependencies {
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
+
+
+
+    implementation 'com.moandjiezana.toml:toml4j:0.7.2'
+    include('com.moandjiezana.toml:toml4j:0.7.2')
 }
 
 processResources {

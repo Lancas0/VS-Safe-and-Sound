@@ -36,8 +36,8 @@ public abstract class VSPhysicsPipelineStageMixin implements ManualRemapPhysPipe
     @Shadow(remap = false) @Final protected abstract Ao h();
     @Shadow(remap = false) @Final protected abstract Object a(Vector3dc v, double d2, boolean z2, Continuation<? super Unit> continuation);
 
-    @Unique private static boolean isSafePhysThread() {
-        return VSafeConfig.get().safePhysThreadOn;
+    @Unique private static boolean vsafe_isSafePhysThread() {
+        return VSafeConfig.INSTANCE.safePhysThreadOn;
     }
 
     @Redirect(
@@ -48,8 +48,8 @@ public abstract class VSPhysicsPipelineStageMixin implements ManualRemapPhysPipe
         ),
         remap = false
     )
-    private void safeSetPoseVel(PhysShipImpl ship, PoseVel newPoseVel) {
-        if (!isSafePhysThread()) {
+    private void vsafe_SetPoseVel(PhysShipImpl ship, PoseVel newPoseVel) {
+        if (!vsafe_isSafePhysThread()) {
             ship.setPoseVel(newPoseVel);
         } else {
             try {
@@ -59,7 +59,7 @@ public abstract class VSPhysicsPipelineStageMixin implements ManualRemapPhysPipe
                     EzDebug.warn("Skip assign invalid PoseVel：" + newPoseVel);
                 }
             } catch (Exception e) {
-                EzDebug.warn("During setPoseVel catch exception:" + e.toString());
+                EzDebug.exception("During setPoseVel catch exception", e);
             }
         }
     }
@@ -73,14 +73,14 @@ public abstract class VSPhysicsPipelineStageMixin implements ManualRemapPhysPipe
         ),
         remap = false
     )
-    private void safeInvokeB(Aq instance, Aj remove) {
-        if (!isSafePhysThread()) {
+    private void vsafe_InvokeB(Aq instance, Aj remove) {
+        if (!vsafe_isSafePhysThread()) {
             b(remove);
         } else {
             try {
                 b(remove);
             } catch (Exception e) {
-                EzDebug.warn("During b(remove) catch exception:" + e.toString());
+                EzDebug.exception("During b(remove) catch exception", e);
             }
         }
     }
@@ -94,14 +94,14 @@ public abstract class VSPhysicsPipelineStageMixin implements ManualRemapPhysPipe
         ),
         remap = false
     )
-    private void safeApplyForce(PhysShipImpl instance, Vector3dc force) {
-        if (!isSafePhysThread())
+    private void vsafe_ApplyForce(PhysShipImpl instance, Vector3dc force) {
+        if (!vsafe_isSafePhysThread())
             instance.applyInvariantForce(force);
         else {
             try {
                 instance.applyInvariantForce(force);
             } catch (Exception e) {
-                EzDebug.warn("During applying force catch exception:" + e.toString());
+                EzDebug.exception("During applying force catch exception", e);
             }
         }
     }
@@ -114,14 +114,14 @@ public abstract class VSPhysicsPipelineStageMixin implements ManualRemapPhysPipe
         ),
         remap = false
     )
-    private void safeApplyTorque(PhysShipImpl instance, Vector3dc torque) {
-        if (!isSafePhysThread())
+    private void vsafe_ApplyTorque(PhysShipImpl instance, Vector3dc torque) {
+        if (!vsafe_isSafePhysThread())
             instance.applyInvariantTorque(torque);
         else {
             try {
                 instance.applyInvariantTorque(torque);
             } catch (Exception e) {
-                EzDebug.warn("During applying torque catch exception:" + e.toString());
+                EzDebug.exception("During applying torque catch exception", e);
             }
         }
     }
@@ -134,14 +134,14 @@ public abstract class VSPhysicsPipelineStageMixin implements ManualRemapPhysPipe
         ),
         remap = false
     )
-    private void safeApplyQueuedForces(PhysShipImpl instance) {
-        if (!isSafePhysThread())
+    private void vsafe_ApplyQueuedForces(PhysShipImpl instance) {
+        if (!vsafe_isSafePhysThread())
             instance.applyQueuedForces();
         else {
             try {
                 instance.applyQueuedForces();
             } catch (Exception e) {
-                EzDebug.warn("During applying queued forces catch exception:" + e.toString());
+                EzDebug.exception("During applying queued forces catch exception", e);
             }
         }
     }
@@ -154,14 +154,14 @@ public abstract class VSPhysicsPipelineStageMixin implements ManualRemapPhysPipe
         ),
         remap = false
     )
-    private Pair<Vector3dc, Vector3dc> safeApplyWingForces(WingPhysicsSolver instance, ShipTransform shipTransform, PoseVel poseVel, WingManagerImpl wingManager, Matrix3dc momentOfInertia) {
-        if (!isSafePhysThread())
+    private Pair<Vector3dc, Vector3dc> vsafe_ApplyWingForces(WingPhysicsSolver instance, ShipTransform shipTransform, PoseVel poseVel, WingManagerImpl wingManager, Matrix3dc momentOfInertia) {
+        if (!vsafe_isSafePhysThread())
             return instance.applyWingForces(shipTransform, poseVel, wingManager, momentOfInertia);
         else {
             try {
                 return instance.applyWingForces(shipTransform, poseVel, wingManager, momentOfInertia);
             } catch (Exception e) {
-                EzDebug.warn("During applying wing forces catch exception:" + e.toString());
+                EzDebug.exception("During applying wing forces catch exception", e);
                 return new Pair<>(new Vector3d(), new Vector3d()); // 返回0向量对，防止物理线程崩
             }
         }
@@ -175,14 +175,14 @@ public abstract class VSPhysicsPipelineStageMixin implements ManualRemapPhysPipe
         ),
         remap = false
     )
-    private void safeApplyForces(ShipForcesInducer inducer, PhysShip ship) {
-        if (!isSafePhysThread())
+    private void vsafe_ApplyForces(ShipForcesInducer inducer, PhysShip ship) {
+        if (!vsafe_isSafePhysThread())
             inducer.applyForces(ship);
         else {
             try {
                 inducer.applyForces(ship);
             } catch (Exception e) {
-                EzDebug.warn("During applying ship forces catch exception:" + e.toString());
+                EzDebug.exception("During applying ship forces catch exception", e);
             }
         }
     }
@@ -195,14 +195,14 @@ public abstract class VSPhysicsPipelineStageMixin implements ManualRemapPhysPipe
         ),
         remap = false
     )
-    private void safeApplyForcesAndLookup(ShipForcesInducer inducer, PhysShip ship, Function1<Long, PhysShip> lookup) {
-        if (!isSafePhysThread())
+    private void vsafe_ApplyForcesAndLookup(ShipForcesInducer inducer, PhysShip ship, Function1<Long, PhysShip> lookup) {
+        if (!vsafe_isSafePhysThread())
             inducer.applyForcesAndLookupPhysShips(ship, lookup);
         else {
             try {
                 inducer.applyForcesAndLookupPhysShips(ship, lookup);
             } catch (Exception e) {
-                EzDebug.warn("During applying forces and lookup catch exception:" + e.toString());
+                EzDebug.exception("During applying forces and lookup catch exception", e);
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.lancas.vsafe.valkyrien;
 
+
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3d;
 import org.valkyrienskies.core.api.ships.PhysShip;

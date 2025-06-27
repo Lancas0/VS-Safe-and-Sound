@@ -32,3 +32,5 @@ mandatory = true
 versionRange = "[2.1.,)"
 ordering = "AFTER"
 side = "BOTH"
+
+displayTest="IGNORE_SERVER_VERSION"

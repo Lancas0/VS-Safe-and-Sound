@@ -68,6 +68,23 @@ dependencies {
     implementation "thedarkcolour:kotlinforforge:$forge_kotlin_version"
 
     modApi "me.shedaniel.cloth:cloth-config-forge:11.1.136"
+
+
+
+    modImplementation("com.simibubi.create:create-${minecraft_version}:${create_forge_version}:slim") { transitive = false }
+    modImplementation("com.jozufozu.flywheel:flywheel-forge-${minecraft_version}:${flywheel_version}")
+    modImplementation("com.tterrag.registrate:Registrate:${registrate_version}")
+
+    //modImplementation ("mezz.jei:jei-${minecraft_version}-forge:15.19.0.85")//jei
+    modImplementation ("maven.modrinth:vvuO3ImH:IPQlZkz1")  //curious
+
+    modImplementation ("curse.maven:cc-tweaked-282001:5379173")
+    //modImplementation ("maven.modrinth:QCUnCyr8:MO4nsdTK")  //control craft
+
+
+    implementation 'com.moandjiezana.toml:toml4j:0.7.2'
+    include('com.moandjiezana.toml:toml4j:0.7.2')
+    forgeRuntimeLibrary('com.moandjiezana.toml:toml4j:0.7.2')
 }
 
 processResources {

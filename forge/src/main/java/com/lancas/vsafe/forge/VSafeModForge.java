@@ -15,5 +15,6 @@ public class VSafeModForge {
         VSafeMod.init();
 
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> VSafeModForgeClient.init(ModLoadingContext.get()));
+        DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> () -> VSafeModForgeServer.init(ModLoadingContext.get()));
     }
 }

@@ -1,6 +1,7 @@
 package com.lancas.vsafe;
 
 import com.google.common.base.Suppliers;
+import com.lancas.vsafe.command.VSafeCommand;
 import com.lancas.vsafe.config.VSafeConfig;
 import com.lancas.vsafe.valkyrien.ExceptionalForceInducer;
 import dev.architectury.registry.CreativeTabRegistry;
@@ -57,6 +58,7 @@ public class VSafeMod {
         TABS.register();
         ITEMS.register();
 
-        VSafeConfig.init();
+        VSafeConfig.loadConfig();
+        VSafeCommand.register();
     }
 }

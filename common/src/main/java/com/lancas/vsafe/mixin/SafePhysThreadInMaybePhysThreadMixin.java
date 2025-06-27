@@ -20,8 +20,8 @@ import java.util.concurrent.locks.Lock;
 @Mixin(Ap.class)
 public abstract class SafePhysThreadInMaybePhysThreadMixin implements ManualRemapPhysThread {
 
-    @Unique private static boolean isSafePhysThread() {
-        return VSafeConfig.get().safePhysThreadOn;
+    @Unique private static boolean vsafe_isSafePhysThread() {
+        return VSafeConfig.INSTANCE.safePhysThreadOn;
     }
 
     @Inject(
@@ -30,8 +30,8 @@ public abstract class SafePhysThreadInMaybePhysThreadMixin implements ManualRema
         remap = false,
         cancellable = true
     )
-    public void run(CallbackInfo ci) {
-        if (!isSafePhysThread())
+    public void vsafe_run(CallbackInfo ci) {
+        if (!vsafe_isSafePhysThread())
             return;
 
         boolean var5;
@@ -45,18 +45,18 @@ public abstract class SafePhysThreadInMaybePhysThreadMixin implements ManualRema
                         }
 
                         AtomicBoolean shouldExit = new AtomicBoolean(false);
-                        physOnce(shouldExit);
+                        vsafe_physOneTick(shouldExit);
                         if (shouldExit.get()) {
                             break label220;
                         }
                     } catch (Exception e) {
-                        EzDebug.error("during phys thread exception:" + e.toString());
+                        EzDebug.exception("during phys thread exception:", e);
                     }
                 }
             }
         } catch (Exception var19) {
             //Ap.a.a().error("Error in physics pipeline background task", (Throwable)var19);
-            EzDebug.error("Error in physics pipeline background task:" + var19.toString());
+            EzDebug.exception("Error in physics pipeline background task", var19);
             //var19.printStackTrace();
 
             byte var2 = 10;
@@ -77,7 +77,7 @@ public abstract class SafePhysThreadInMaybePhysThreadMixin implements ManualRema
     @Shadow(remap = false) @Final protected abstract void a(double a, long b);
 
     @Unique
-    private void physOnce(AtomicBoolean shouldEndPhys) {
+    private void vsafe_physOneTick(AtomicBoolean shouldEndPhys) {
         if (this.getPhysItem().b()) {
             int var21 = VSCoreConfig.SERVER.getPt().getPhysicsTicksPerGameTick();
             double var24 = 1.0D / (double)(20 * var21) * VSCoreConfig.SERVER.getPhysics().getPhysicsSpeed();
@@ -99,7 +99,7 @@ public abstract class SafePhysThreadInMaybePhysThreadMixin implements ManualRema
 
                 Unit var27 = Unit.INSTANCE;
             } catch (Exception e) {
-                EzDebug.warn("Inside PhysOnce there is a exception: " + e.toString());
+                EzDebug.exception("Inside physOneTick there is a exception: ", e);
             } finally {
                 var4.unlock();
             }
@@ -126,7 +126,7 @@ public abstract class SafePhysThreadInMaybePhysThreadMixin implements ManualRema
 
                     Unit var23 = Unit.INSTANCE;
                 } catch (Exception e) {
-                    EzDebug.warn("Inside PhysOnce there is a exception: " + e.toString());
+                    EzDebug.exception("Inside PhysOnce there is a exception: ", e);
                 } finally {
                     var1.unlock();
                 }

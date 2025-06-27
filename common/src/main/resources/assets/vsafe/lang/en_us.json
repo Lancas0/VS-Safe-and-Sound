@@ -5,6 +5,7 @@
   "item.vsafe.crash_it": "Crash It",
 
   "title.vsafe.config": "VS Safe and Sound Config",
+  "config.vsafe.category.server": "Server",
 
   "option.vsafe.safe_phys_thread_on": "Safe VS Phys Thread On",
   "tooltip.vsafe.safe_phys_thread_on": "Safe Phys Thread On determines whether the safe physics thread is enabled.\nA game restart is required for this setting to fully take effect.",

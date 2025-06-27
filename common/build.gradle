@@ -29,6 +29,9 @@ dependencies {
 
 
     modImplementation("me.shedaniel.cloth:cloth-config:11.0.99")
+
+
+    implementation 'com.moandjiezana.toml:toml4j:0.7.2'
 }
 
 publishing {

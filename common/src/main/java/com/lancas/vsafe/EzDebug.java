@@ -1,6 +1,9 @@
 package com.lancas.vsafe;
 
 import com.lancas.vsafe.config.VSafeConfig;
+import com.lancas.vsafe.util.ExceptionUtil;
+import dev.architectury.platform.Platform;
+import dev.architectury.utils.Env;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Nullable;
@@ -23,16 +26,20 @@ public class EzDebug {
         DisplayInGameAndLogST
     }
     public static boolean shouldDebugInLog() {
-        return VSafeConfig.get().debugMode != DebugMode.Silent;
+        return VSafeConfig.INSTANCE.debugMode != DebugMode.Silent;
     }
     public static boolean shouldDebugST() {
-        return switch (VSafeConfig.get().debugMode) {
+        return switch (VSafeConfig.INSTANCE.debugMode) {
             case OnlyInLogST, DisplayInGameAndLogST -> true;
             default -> false;
         };
     }
     public static boolean shouldDisplayInGame() {
-        return switch (VSafeConfig.get().debugMode) {
+        if (Platform.getEnvironment() == Env.SERVER) {
+            return false;
+        }
+
+        return switch (VSafeConfig.INSTANCE.debugMode) {
             case DisplayInGame, DisplayInGameAndLogST -> true;
             default -> false;
         };
@@ -51,6 +58,16 @@ public class EzDebug {
             logger.log(level, msg + "\n" + Arrays.stream(stackTrace).map(Objects::toString).collect(Collectors.joining("\n")));
         } else {
             logger.log(level, msg);
+        }
+    }
+    private static void exceptionInLog(Level level, String pre, Exception e) {
+        if (!shouldDebugInLog())
+            return;
+
+        if (shouldDebugST()) {
+            logger.log(level, pre + "\n" + ExceptionUtil.getStackTraceAsString(e));
+        } else {
+            logger.log(level, pre + "\n" + e.toString());
         }
     }
 
@@ -158,6 +175,18 @@ public class EzDebug {
         }
 
         logInLog(Level.WARNING, str.startsWith("[Fatal]") ? str : "[Fatal]" + str);
+        return DEFAULT;
+    }
+
+    public static EzDebug exception(String pre, Exception e) {
+        if (shouldDisplayInGame()) {
+            Minecraft mc = Minecraft.getInstance();
+            if (mc.player != null) {
+                mc.player.sendSystemMessage(Component.literal("§4" + pre + "\n" + e.toString()));
+            }
+        }
+
+        exceptionInLog(Level.WARNING, pre, e);
         return DEFAULT;
     }
 

@@ -51,6 +51,53 @@ subprojects {
             name = "Modrinth"
             url = "https://api.modrinth.com/maven"
         }
+        maven {
+            url "https://maven.squiddev.cc"
+            content {
+                includeGroup("cc.tweaked")
+            }
+        }
+        maven {
+            url "https://cursemaven.com"
+            content {
+                includeGroup "curse.maven"
+            }
+        }
+
+        maven {
+            // location of the maven that hosts JEI files since January 2023
+            // location of the maven for Vazkii's mods
+            name = "Jared's maven"
+            url = "https://maven.blamejared.com/"
+        }
+
+        maven { // Flywheel
+            url = "https://maven.tterrag.com/"
+            content {
+                // need to be specific here due to version overlaps
+                includeGroup("com.jozufozu.flywheel")
+            }
+        }
+        maven {
+            name "createmod maven"
+            url "https://maven.createmod.net/"
+        }
+
+        maven {
+            // Location of the maven for mixed mappings, Registrate, and Flywheel
+            name 'tterrag maven'
+            url 'https://maven.tterrag.com'
+        }
+
+        maven {
+            name = "Curios"
+            url = uri("https://maven.theillusivec4.top/")
+        }
+
+        maven {
+            name = "SquidDev Maven"
+            url = "https://squiddev.cc/maven/"
+        }
     }
 
     dependencies {
